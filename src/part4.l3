@@ -1,15 +1,30 @@
 (define last-item
-  (λ (lst)
-    'todo))
+  (lambda (lst)
+    (if (empty? (cdr lst)) 
+        (car lst)          
+        (last-item (cdr lst))))) 
+
 
 (define remove-last-item
-  (λ (lst)
-    'todo))
+  (lambda (lst)
+    (if (empty? (cdr lst)) 
+        '()                              
+        (cons (car lst) (remove-last-item (cdr lst)))
+        )))
+
 
 (define rotate-nth
-  (λ (lst n)
-   'todo))
+  (lambda (lst n)
+   (if (eq? n 0)
+    lst
+    (rotate-nth (cons (last-item lst) (remove-last-item lst)) (- n 1))
+   )))
+
 
 (define deep-reverse
-  (λ (l)
-    'todo))
+  (lambda (lst)
+    (if (empty? lst)
+        '()
+        (if (list? (last-item lst))
+            (cons (deep-reverse (last-item lst)) (deep-reverse (remove-last-item lst)))
+            (cons (last-item lst) (deep-reverse (remove-last-item lst)))))))
