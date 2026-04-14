@@ -1,10 +1,19 @@
+; Signature: (last-item lst)
+; Type: [ List(T) -> T ]
+; Purpose: Return the final element of a non-empty list.
+; Pre-conditions: The input lst must be a non-empty list.
+; Tests: (last-item '(1 2 3)) => 3
 (define last-item
   (lambda (lst)
     (if (empty? (cdr lst)) 
         (car lst)          
         (last-item (cdr lst))))) 
 
-
+; Signature: (remove-last-item lst)
+; Type: [ List(T) -> List(T) ]
+; Purpose: Return the list without the last element.
+; Pre-conditions: The input lst must be a non-empty list.
+; Tests: (remove-last-item '(1 2 3)) => '(1 2)
 (define remove-last-item
   (lambda (lst)
     (if (empty? (cdr lst)) 
@@ -12,7 +21,11 @@
         (cons (car lst) (remove-last-item (cdr lst)))
         )))
 
-
+; Signature: (rotate-nth lst n)
+; Type: [ List(T), Integer -> List(T) ]
+; Purpose: To cyclically shift the list to the right n times.
+; Pre-conditions: lst must be a non-empty list; n must be a non-negative integer.
+; Tests: (rotate-nth '(1 2 3) 1) => (3 1 2)
 (define rotate-nth
   (lambda (lst n)
    (if (eq? n 0)
@@ -20,7 +33,13 @@
     (rotate-nth (cons (last-item lst) (remove-last-item lst)) (- n 1))
    )))
 
-
+; Signature: (deep-reverse lst)
+; Type: [ List(T) -> List(T) ]
+; Purpose: Reverse the order of elements in a list, and recursively reverse any nested lists found within it.
+; Pre-conditions: The input lst must be a list (can be empty).
+; Tests: (deep-reverse '(1 2 3)) => (3 2 1)
+;        (deep-reverse '(1 (2 3) (4 5))) => ((5 4) (3 2) 1)
+;        (deep-reverse '()) => ()
 (define deep-reverse
   (lambda (lst)
     (if (empty? lst)
